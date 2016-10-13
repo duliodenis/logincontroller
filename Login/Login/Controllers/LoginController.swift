@@ -9,11 +9,15 @@
 import UIKit
 
 class LoginController: UIViewController {
-
-    let collectionView: UICollectionView = {
+    
+    let cellId = "cellId"
+    
+    lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .green
+        cv.delegate = self
+        cv.dataSource = self
         return cv
     }()
     
@@ -22,6 +26,19 @@ class LoginController: UIViewController {
         
         view.addSubview(collectionView)
         collectionView.anchorToTop(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+    }
+}
+
+extension LoginController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        return cell
     }
 }
 
