@@ -13,11 +13,14 @@ class LoginController: UIViewController {
     let cellId = "cellId"
     
     lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewLayout()
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 2
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .green
         cv.delegate = self
         cv.dataSource = self
+        cv.isPagingEnabled = true
         return cv
     }()
     
@@ -38,7 +41,12 @@ extension LoginController: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        cell.backgroundColor = .white
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height)
     }
 }
 
