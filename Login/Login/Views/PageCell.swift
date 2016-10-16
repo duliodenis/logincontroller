@@ -19,6 +19,13 @@ class PageCell: UICollectionViewCell {
         return iv
     }()
     
+    let textView: UITextView = {
+       let tv = UITextView()
+        tv.text = "Walkthrough"
+        tv.isEditable = false
+        return tv
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -30,7 +37,10 @@ class PageCell: UICollectionViewCell {
     
     func setupViews() {
         addSubview(imageView)
-        imageView.anchorToTop(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        addSubview(textView)
+        imageView.anchorToTop(top: topAnchor, left: leftAnchor, bottom: textView.topAnchor, right: rightAnchor)
+        textView.anchorToTop(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        textView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.3).isActive = true
     }
     
 }
