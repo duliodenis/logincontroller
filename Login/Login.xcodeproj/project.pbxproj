@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6C4DEC181DB3CB2B00B88892 /* PageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4DEC171DB3CB2B00B88892 /* PageCell.swift */; };
 		6C5A6AD61DADDDC00045044E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5A6AD51DADDDC00045044E /* AppDelegate.swift */; };
 		6C5A6ADB1DADDDC00045044E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C5A6AD91DADDDC00045044E /* Main.storyboard */; };
 		6C5A6ADD1DADDDC00045044E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6C5A6ADC1DADDDC00045044E /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6C4DEC171DB3CB2B00B88892 /* PageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageCell.swift; path = Views/PageCell.swift; sourceTree = "<group>"; };
 		6C5A6AD21DADDDC00045044E /* Login.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Login.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C5A6AD51DADDDC00045044E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6C5A6ADA1DADDDC00045044E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				6C5A6AD51DADDDC00045044E /* AppDelegate.swift */,
 				6C5A6AE71DAE8C730045044E /* LoginController.swift */,
+				6C4DEC171DB3CB2B00B88892 /* PageCell.swift */,
 				6C5A6AD91DADDDC00045044E /* Main.storyboard */,
 				6C5A6ADC1DADDDC00045044E /* Assets.xcassets */,
 				6C5A6ADE1DADDDC00045044E /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			files = (
 				6C5A6AE81DAE8C730045044E /* LoginController.swift in Sources */,
 				6C5A6AD61DADDDC00045044E /* AppDelegate.swift in Sources */,
+				6C4DEC181DB3CB2B00B88892 /* PageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
