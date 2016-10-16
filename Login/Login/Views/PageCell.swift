@@ -19,7 +19,7 @@ class PageCell: UICollectionViewCell {
             
             imageView.image = UIImage(named: page.imageName)
             
-            let fontColor = UIColor(red: 28/255, green: 42/255, blue: 57/255, alpha: 1)
+            let fontColor = UIColor.rgb(28, 42, 57)
             let attributedText = NSMutableAttributedString(string: page.title,
                                                     attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 24, weight: UIFontWeightMedium),
                                                                  NSForegroundColorAttributeName: fontColor])

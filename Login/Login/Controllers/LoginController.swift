@@ -11,6 +11,7 @@ import UIKit
 class LoginController: UIViewController {
     
     let cellId = "cellId"
+    
     let pages: [Page] = {
         let firstPage = Page(title: "What's the Move in Your Hood", message: "Find out where the fun is in your neighborhood.", imageName: "Page1")
         let secondPage = Page(title: "Chat with Your Friends", message: "Stay in touch with your neighborhood friends so you catch all the fun.", imageName: "Page2")
@@ -31,14 +32,48 @@ class LoginController: UIViewController {
         return cv
     }()
     
+    let pageControl: UIPageControl = {
+        let pc = UIPageControl()
+        pc.pageIndicatorTintColor = .lightGray
+        pc.numberOfPages = 3
+        pc.currentPageIndicatorTintColor = UIColor.rgb(41, 128, 185)
+        return pc
+    }()
+    
+    let skipButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Skip", for: .normal)
+        btn.setTitleColor(UIColor.rgb(41, 128, 185), for: .normal)
+        return btn
+    }()
+    
+    let nextButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Next", for: .normal)
+        btn.setTitleColor(UIColor.rgb(41, 128, 185), for: .normal)
+        return btn
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.addSubview(collectionView)
+        view.addSubview(pageControl)
+        view.addSubview(skipButton)
+        view.addSubview(nextButton)
+        
+        _ = skipButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 16, rightConstant: 0, widthConstant: 60, heightConstant: 50)
+        
+        _ = nextButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 16, rightConstant: 10, widthConstant: 60, heightConstant: 50)
+        
         collectionView.anchorToTop(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: cellId)
+        
+        _ = pageControl.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 40)
     }
 }
+
 
 extension LoginController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
@@ -87,6 +122,50 @@ extension UIView {
         if let right = right {
             rightAnchor.constraint(equalTo: right, constant: -rightConstant).isActive = true
         }
+    }
+    
+    
+    func anchor(top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        var anchors = [NSLayoutConstraint]()
+        
+        if let top = top {
+            anchors.append(topAnchor.constraint(equalTo: top, constant: topConstant))
+        }
+        
+        if let left = left {
+            anchors.append(leftAnchor.constraint(equalTo: left, constant: leftConstant))
+        }
+        
+        if let bottom = bottom {
+            anchors.append(bottomAnchor.constraint(equalTo: bottom, constant: -bottomConstant))
+        }
+        
+        if let right = right {
+            anchors.append(rightAnchor.constraint(equalTo: right, constant: -rightConstant))
+        }
+        
+        if widthConstant > 0 {
+            anchors.append(widthAnchor.constraint(equalToConstant: widthConstant))
+        }
+        
+        if heightConstant > 0 {
+            anchors.append(heightAnchor.constraint(equalToConstant: heightConstant))
+        }
+        
+        anchors.forEach({$0.isActive = true})
+        
+        return anchors
+    }
+    
+}
+
+
+extension UIColor {
+    
+    static func rgb(_ red: CGFloat, _ green: CGFloat, _ blue: CGFloat) -> UIColor {
+        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
     }
     
 }
