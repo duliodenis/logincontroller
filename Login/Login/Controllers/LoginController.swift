@@ -11,6 +11,13 @@ import UIKit
 class LoginController: UIViewController {
     
     let cellId = "cellId"
+    let pages: [Page] = {
+        let firstPage = Page(title: "What's the Move in Your Hood", message: "Find out where the fun is in your neighborhood.", imageName: "Page1")
+        let secondPage = Page(title: "Chat with Your Friends", message: "Stay in touch with your neighborhood friends so you catch all the fun.", imageName: "Page2")
+        let thirdPage = Page(title: "Share Your Moments", message: "Share your moments with those in your neighborhood.", imageName: "Page3")
+        
+        return [firstPage, secondPage, thirdPage]
+    }()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -36,11 +43,13 @@ class LoginController: UIViewController {
 extension LoginController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return pages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PageCell
+        
+        cell.page = pages[indexPath.item]
         
         return cell
     }

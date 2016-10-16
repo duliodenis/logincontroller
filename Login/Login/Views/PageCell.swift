@@ -10,6 +10,19 @@ import UIKit
 
 class PageCell: UICollectionViewCell {
     
+    var page: Page? {
+        didSet {
+            
+            guard let page = page else {
+                return
+            }
+            
+            imageView.image = UIImage(named: page.imageName)
+            textView.text = "\(page.title) \n \(page.message)"
+            
+        }
+    }
+    
     let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
