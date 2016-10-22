@@ -13,6 +13,11 @@ class LoginController: UIViewController {
     let cellId = "cellId"
     let loginCellId = "loginCellId"
     
+    // constraint variables used for animation
+    var pageControlBottomAnchor: NSLayoutConstraint?
+    var skipButtonBottomAnchor: NSLayoutConstraint?
+    var nextButtonBottomAnchor: NSLayoutConstraint?
+    
     let pages: [Page] = {
         let firstPage = Page(title: "What's the Move in Your Hood", message: "Find out where the fun is in your neighborhood.", imageName: "Page1")
         let secondPage = Page(title: "Chat with Your Friends", message: "Stay in touch with your neighborhood friends so you catch all the fun.", imageName: "Page2")
@@ -64,21 +69,37 @@ class LoginController: UIViewController {
         view.addSubview(skipButton)
         view.addSubview(nextButton)
         
-        _ = skipButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 16, rightConstant: 0, widthConstant: 60, heightConstant: 50)
+        skipButtonBottomAnchor = skipButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: nil, topConstant: 0, leftConstant: 10, bottomConstant: 16, rightConstant: 0, widthConstant: 60, heightConstant: 50)[2]
         
-        _ = nextButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 16, rightConstant: 10, widthConstant: 60, heightConstant: 50)
+        nextButtonBottomAnchor = nextButton.anchor(top: nil, left: nil, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 16, rightConstant: 10, widthConstant: 60, heightConstant: 50)[2]
         
         collectionView.anchorToTop(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         
         registerCells()
         
-        _ = pageControl.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 40)
+        pageControlBottomAnchor = pageControl.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 40)[1]
     }
     
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let pageNumber = Int(targetContentOffset.pointee.x / view.frame.width)
         pageControl.currentPage = pageNumber
+        
+        // if we are on the last page of the Onboarding
+        if pageNumber == pages.count {
+            pageControlBottomAnchor?.constant = 50
+            skipButtonBottomAnchor?.constant = 0
+            nextButtonBottomAnchor?.constant = 0
+        } else {
+            pageControlBottomAnchor?.constant = 0
+            skipButtonBottomAnchor?.constant = 50
+            nextButtonBottomAnchor?.constant = 50
+        }
+        
+        // animate layout if needed
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            self.view.layoutIfNeeded()
+            }, completion: nil)
     }
     
     
