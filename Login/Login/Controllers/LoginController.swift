@@ -46,17 +46,19 @@ class LoginController: UIViewController {
         return pc
     }()
     
-    let skipButton: UIButton = {
+    lazy var skipButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("Skip", for: .normal)
         btn.setTitleColor(UIColor.rgb(41, 128, 185), for: .normal)
+        btn.addTarget(self, action: #selector(skipPages), for: .touchUpInside)
         return btn
     }()
     
-    let nextButton: UIButton = {
+    lazy var nextButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("Next", for: .normal)
         btn.setTitleColor(UIColor.rgb(41, 128, 185), for: .normal)
+        btn.addTarget(self, action: #selector(nextPage), for: .touchUpInside)
         return btn
     }()
     
@@ -80,6 +82,50 @@ class LoginController: UIViewController {
         registerCells()
         
         pageControlBottomAnchor = pageControl.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, topConstant: 0, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 40)[1]
+    }
+    
+    
+    func skipPages() {
+        let indexPath = IndexPath(item: pages.count, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        pageControl.currentPage = pages.count
+        animatePage()
+    }
+    
+    
+    func nextPage() {
+        if pageControl.currentPage == pages.count { return }
+        let indexPath = IndexPath(item: pageControl.currentPage + 1, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        pageControl.currentPage += 1
+        
+        // take care of the last page animation
+        animatePage()
+    }
+    
+    
+    func animatePage() {
+        if pageControl.currentPage == pages.count {
+            moveConstraintsOffScreen()
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.view.layoutIfNeeded()
+                }, completion: nil)
+        }
+    }
+    
+    
+    fileprivate func moveConstraintsOffScreen() {
+        pageControlBottomAnchor?.constant = 50
+        skipButtonBottomAnchor?.constant = 0
+        nextButtonBottomAnchor?.constant = 0
+    }
+    
+    
+    fileprivate func moveConstraintsOnScreen() {
+        pageControlBottomAnchor?.constant = 0
+        skipButtonBottomAnchor?.constant = 50
+        nextButtonBottomAnchor?.constant = 50
     }
     
     
@@ -114,13 +160,9 @@ class LoginController: UIViewController {
         
         // if we are on the last page of the Onboarding
         if pageNumber == pages.count {
-            pageControlBottomAnchor?.constant = 50
-            skipButtonBottomAnchor?.constant = 0
-            nextButtonBottomAnchor?.constant = 0
+            moveConstraintsOffScreen()
         } else {
-            pageControlBottomAnchor?.constant = 0
-            skipButtonBottomAnchor?.constant = 50
-            nextButtonBottomAnchor?.constant = 50
+            moveConstraintsOnScreen()
         }
         
         // animate layout if needed
