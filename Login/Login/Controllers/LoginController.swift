@@ -8,7 +8,11 @@
 
 import UIKit
 
-class LoginController: UIViewController {
+protocol LoginControllerDelegate: class {
+    func finishedLogIn()
+}
+
+class LoginController: UIViewController, LoginControllerDelegate {
     
     let cellId = "cellId"
     let loginCellId = "loginCellId"
@@ -177,6 +181,16 @@ class LoginController: UIViewController {
         collectionView.register(PageCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(LoginCell.self, forCellWithReuseIdentifier: loginCellId)
     }
+    
+    
+    func finishedLogIn() {
+        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+        guard let mainNavigationController = rootViewController as? MainNavigationController else { return }
+        
+        mainNavigationController.viewControllers = [HomeController()]
+        
+        dismiss(animated: true, completion: nil)
+    }
 }
 
 
@@ -187,8 +201,10 @@ extension LoginController: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // set-up the Login Cell
         if indexPath.item == pages.count {
-            let loginCell = collectionView.dequeueReusableCell(withReuseIdentifier: loginCellId, for: indexPath)
+            let loginCell = collectionView.dequeueReusableCell(withReuseIdentifier: loginCellId, for: indexPath) as! LoginCell
+            loginCell.delegate = self
             return loginCell
         }
         
