@@ -189,6 +189,8 @@ class LoginController: UIViewController, LoginControllerDelegate {
         
         mainNavigationController.viewControllers = [HomeController()]
         
+        UserDefaults.standard.setIsLoggedIn(value: true)
+        
         dismiss(animated: true, completion: nil)
     }
 }

@@ -15,14 +15,19 @@ class MainNavigationController: UINavigationController {
         
         view.backgroundColor = .white
         
-        let isLoggedIn = false
-        if isLoggedIn {
-            // let homeController = HomeController()
-            // viewControllers = [homeController]
+        if isLoggedIn() {
+            let homeController = HomeController()
+            viewControllers = [homeController]
         } else {
             perform(#selector(presentLoginController), with: nil, afterDelay: 0.01)
         }
     }
+    
+    
+    func isLoggedIn() -> Bool {
+        return UserDefaults.standard.isLoggedIn()
+    }
+    
     
     func presentLoginController() {
         let loginController = LoginController()

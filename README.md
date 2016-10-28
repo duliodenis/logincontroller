@@ -1,7 +1,7 @@
 # Login Controller
-An iOS 10 / Swift 3 based App that is an example of a Walkthrough / Onboarding / Guide / Login component. Utilizes a UICollectionView to page through several screens of content.
+An iOS 10 / Swift 3 based App that is an example of a Walkthrough / Onboarding / Guide / Login component. Utilizes a UICollectionView to page through several screens of content. All UI is programmatic and uses AutoLayout.
 
-![](art/screenshot/login08.gif?raw=true)
+![](art/screenshot/login09.gif?raw=true)
 
 ### Contributing
 See [CONTRIBUTING](CONTRIBUTING.md).
